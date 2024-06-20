@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { VueloModule } from './vuelo/vuelo.module';
+import { ReservaModule } from './reserva/reserva.module';
+import { PasajeroModule } from './pasajero/pasajero.module';
 
 @Module({
   imports: [
@@ -20,6 +23,9 @@ import { AppService } from './app.service';
         rejectUnauthorized: false
       }
     }),
+    VueloModule,
+    ReservaModule,
+    PasajeroModule,
   ],
   controllers: [AppController],
   providers: [AppService],
