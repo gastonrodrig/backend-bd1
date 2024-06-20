@@ -8,7 +8,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  redirect(@Res() res : any) {
+  redirect(@Res() res) {
     return res.redirect('/api');
   }
 }

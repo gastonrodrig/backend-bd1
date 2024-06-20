@@ -16,7 +16,7 @@ import { PasajeroModule } from './pasajero/pasajero.module';
       port: parseInt(process.env.DATABASE_PORT, 10),
       password: process.env.DATABASE_PASSWORD,
       username: process.env.DATABASE_USERNAME,
-      entities: [__dirname + '/*/.entity{.ts,.js}'],
+      autoLoadEntities: true,
       database: process.env.DATABASE_NAME,
       synchronize: true,
       ssl: {
