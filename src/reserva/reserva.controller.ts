@@ -21,8 +21,8 @@ export class ReservaController {
     }
 
     @Get(':id')
-    findOne(@Param('id', ParseIntPipe) id: number): Promise<Reserva> {
-        return this.reservaService.findOneById(id)
+    findOne(@Param('id') id: string): Promise<Reserva> {
+        return this.reservaService.findOneById(+id)
     }
 
     @Put(':id')

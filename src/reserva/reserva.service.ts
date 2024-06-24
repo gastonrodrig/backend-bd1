@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reserva } from './entities/reserva.entity';
 import { DeepPartial, Repository } from 'typeorm';
@@ -12,19 +12,23 @@ export class ReservaService {
 
     constructor(
         @InjectRepository(Reserva)
-        private reservaRespository: Repository<Reserva>
-    ) { }
+        private reservaRespository: Repository<Reserva>,
+    ){}
 
     async create(tipoData: CreateReservaDto): Promise<Reserva[]> {
         const vuelo: DeepPartial<Vuelo> = {
-            id_vuelo: tipoData.vuelo
+            id_vuelo: tipoData.id_vuelo
         }
+        if(!vuelo) throw new BadRequestException('Vuelo not found')
+
         const pasajero: DeepPartial<Pasajero> = {
-            id_pasajero: tipoData.pasajero
+            id_pasajero: tipoData.id_pasajero
         }
+        if(!pasajero) throw new BadRequestException('Pasajero not found')
+
         const tipo_partial: DeepPartial<Reserva> = {
-            id_vuelo: vuelo,
-            id_pasajero: pasajero,
+            vuelo: vuelo,
+            pasajero: pasajero,
             fecha_reserva: tipoData.fecha_reserva,
             importe: tipoData.importe
         }
@@ -35,8 +39,8 @@ export class ReservaService {
     async findAll(): Promise<Reserva[]> {
         return this.reservaRespository.find({
             relations: {
-                id_vuelo: true,
-                id_pasajero: true
+                vuelo: true,
+                pasajero: true
             }
         })
     }
@@ -47,8 +51,8 @@ export class ReservaService {
                 id_reserva
             },
             relations: {
-                id_vuelo: true,
-                id_pasajero: true
+                vuelo: true,
+                pasajero: true
             }
         })
     }
@@ -59,19 +63,19 @@ export class ReservaService {
                 id_reserva
             },
             relations: {
-                id_vuelo: true,
-                id_pasajero: true
+                vuelo: true,
+                pasajero: true
             }
         })
         const vuelo: DeepPartial<Vuelo> = {
-            id_vuelo: tipoData.vuelo
+            id_vuelo: tipoData.id_vuelo
         }
         const pasajero: DeepPartial<Pasajero> = {
-            id_pasajero: tipoData.pasajero
+            id_pasajero: tipoData.id_pasajero
         }
         const modelo_partial: DeepPartial<Reserva> = {
-            id_vuelo: vuelo,
-            id_pasajero: pasajero,
+            vuelo: vuelo,
+            pasajero: pasajero,
             fecha_reserva: tipoData.fecha_reserva,
             importe: tipoData.importe
         }
